@@ -31,7 +31,7 @@
         <TextBlock Text="Liste des Pokémon" FontSize="24" FontWeight="Bold" Foreground="#333" 
                    HorizontalAlignment="Center" Margin="10"/>
 
-        <ListBox x:Name="lstMonsters" Margin="10" Padding="10" BorderBrush="#E0E0E0" BorderThickness="1">
+        <ListBox x:Name="lstMonsters" Margin="10" Padding="10" BorderBrush="#E0E0E0" BorderThickness="1" MouseDoubleClick="LstMonsters_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">

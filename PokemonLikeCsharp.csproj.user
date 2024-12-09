@@ -13,6 +13,12 @@
     <Compile Update="AddPokemonWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="PokemonDetailsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="EditPokemonWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -22,6 +28,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AddPokemonWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PokemonDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="EditPokemonWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

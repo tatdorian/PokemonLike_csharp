@@ -23,7 +23,6 @@ namespace PokemonLikeCsharp
             var user = _context.Logins.SingleOrDefault(u => u.Username == username);
             if (user != null && user.VerifyPassword(password))
             {
-                MessageBox.Show($"Connexion réussie de {username}");
 
                 var playerMonstersWindow = new PlayerMonstersWindow(username);
                 Application.Current.MainWindow = playerMonstersWindow;

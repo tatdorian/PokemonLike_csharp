@@ -142,3 +142,9 @@ C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0
 C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\PokemonLikeCsharp.pdb
 C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\PokemonLikeCsharp.genruntimeconfig.cache
 C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\ref\PokemonLikeCsharp.dll
+C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\bin\Debug\net9.0-windows\PokemonLikeCsharp.dll.config
+C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\PokemonLikeCsharp.sourcelink.json
+C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\PokemonDetailsWindow.baml
+C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\PokemonDetailsWindow.g.cs
+C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\EditPokemonWindow.baml
+C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\obj\Debug\net9.0-windows\EditPokemonWindow.g.cs

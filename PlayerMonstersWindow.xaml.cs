@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using PokemonLikeCsharp.Model;
 
@@ -45,14 +46,22 @@ namespace PokemonLikeCsharp
             addPokemonWindow.ShowDialog();
             LoadMonsters(); // Recharger la liste après ajout
         }
+
         private void BackToLogin_Click(object sender, RoutedEventArgs e)
         {
-            var MainWindow = new MainWindow();
-            MainWindow.Show();
-           
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
-
         }
 
+        private void LstMonsters_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lstMonsters.SelectedItem is Monster selectedMonster)
+            {
+                var pokemonDetailsWindow = new PokemonDetailsWindow(selectedMonster);
+                pokemonDetailsWindow.ShowDialog();
+                LoadMonsters(); // Recharger la liste après modification
+            }
+        }
     }
 }

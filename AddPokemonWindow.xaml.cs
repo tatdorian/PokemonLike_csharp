@@ -64,8 +64,6 @@ namespace PokemonLikeCsharp
 
             player.Monsters.Add(newMonster);
             _context.SaveChanges();
-
-            MessageBox.Show("Pokémon ajouté avec succès !");
             this.Close();
         }
 
