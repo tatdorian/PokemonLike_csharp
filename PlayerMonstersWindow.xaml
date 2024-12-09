@@ -1,0 +1,50 @@
+﻿<Window x:Class="PokemonLikeCsharp.PlayerMonstersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Liste des Pokémon" 
+        Background="#F0F4F8"
+        WindowState="Maximized"
+        WindowStyle="None">
+
+    <Window.Resources>
+        <!-- Bouton moderne -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderBrush" Value="#1976D2"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="5" ShadowDepth="2" Color="Gray"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="30">
+        <TextBlock Text="Liste des Pokémon" FontSize="24" FontWeight="Bold" Foreground="#333" 
+                   HorizontalAlignment="Center" Margin="10"/>
+
+        <ListBox x:Name="lstMonsters" Margin="10" Padding="10" BorderBrush="#E0E0E0" BorderThickness="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
+                        <Image Source="{Binding ImageUrl}" Width="50" Height="50" Margin="5" Stretch="UniformToFill"/>
+                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+            <Button Content="Ajouter un Pokémon" Click="AddPokemonBtn_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Retour au Login" Click="BackToLogin_Click" Style="{StaticResource ButtonStyle}" Background="#F44336"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="PokemonLikeCsharp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="469" Width="573"
+        Background="#F0F4F8">
+    <Grid Margin="0,0,0,22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Connexion" FontSize="24" FontWeight="Bold" Foreground="#333"
+                   HorizontalAlignment="Center" Margin="20"/>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <TextBlock Text="Nom d'utilisateur" Margin="0,5"/>
+            <TextBox x:Name="txtUsername" Margin="0,10" Padding="5"/>
+
+            <TextBlock Text="Mot de passe" Margin="0,5"/>
+            <PasswordBox x:Name="txtPassword" Margin="0,10" Padding="5"/>
+
+            <Button Content="Se connecter" Click="loginBtn_Click" Margin="0,10"
+                    Background="#2196F3" Foreground="White" FontWeight="Bold" Padding="10"/>
+            <Button Content="Créer un compte" Click="signupBtn_Click" Margin="0,10"
+                    Background="#2196F3" Foreground="White" FontWeight="Bold" Padding="10"/>
+            <Button Content="Quitter" Click="exitApp" Margin="0,10"
+                    Background="#F44336" Foreground="White" FontWeight="Bold" Padding="10"/>
+        </StackPanel>
+    </Grid>
+</Window>
