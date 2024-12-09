@@ -42,7 +42,7 @@
                    HorizontalAlignment="Center" Margin="10"/>
 
         <!-- Formulaire de connexion -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
             <TextBlock Text="Nom d'utilisateur" Margin="5" FontSize="14"/>
             <TextBox x:Name="txtUsername" Style="{StaticResource InputStyle}"/>
 

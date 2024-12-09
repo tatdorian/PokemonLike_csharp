@@ -29,6 +29,7 @@ namespace PokemonLikeCsharp
             try
             {
                 _monster.Name = txtName.Text;
+
                 if (int.TryParse(txtHealth.Text, out int health))
                 {
                     _monster.Health = health;
@@ -38,9 +39,26 @@ namespace PokemonLikeCsharp
                     MessageBox.Show("Veuillez entrer une valeur numérique valide pour la santé.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                _monster.ImageUrl = txtImageUrl.Text;
 
-                // Attach the entity to the context and mark it as modified
+                if (!string.IsNullOrEmpty(txtImageUrl.Text))
+                {
+                    try
+                    {
+                        var uri = new Uri(txtImageUrl.Text);
+                        _monster.ImageUrl = txtImageUrl.Text;
+                    }
+                    catch (UriFormatException)
+                    {
+                        MessageBox.Show("L'URL de l'image est invalide. Veuillez entrer une URL valide.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("L'URL de l'image ne peut pas être vide.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 _context.Monsters.Attach(_monster);
                 _context.Entry(_monster).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
