@@ -7,33 +7,33 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="PlayerMonstersWindow.xaml.cs">
+    <Compile Update="MVVM\View\PlayerMonstersWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="AddPokemonWindow.xaml.cs">
+    <Compile Update="MVVM\View\AddPokemonWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PokemonDetailsWindow.xaml.cs">
+    <Compile Update="MVVM\View\PokemonDetailsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="EditPokemonWindow.xaml.cs">
+    <Compile Update="MVVM\View\EditPokemonWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Page Update="MVVM\View\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PlayerMonstersWindow.xaml">
+    <Page Update="MVVM\View\PlayerMonstersWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="AddPokemonWindow.xaml">
+    <Page Update="MVVM\View\AddPokemonWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PokemonDetailsWindow.xaml">
+    <Page Update="MVVM\View\PokemonDetailsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="EditPokemonWindow.xaml">
+    <Page Update="MVVM\View\EditPokemonWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

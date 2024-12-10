@@ -77,7 +77,7 @@ namespace PokemonLikeCsharp {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PokemonLikeCsharp;component/pokemondetailswindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PokemonLikeCsharp;V1.0.0.0;component/pokemondetailswindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\PokemonDetailsWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

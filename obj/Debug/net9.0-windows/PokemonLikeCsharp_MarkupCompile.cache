@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
 C:\Users\tatou\source\repos\PokemonLikeCsharp\PokemonLikeCsharp\App.xaml
-5-617574051
+51478661506
 
-141193581013
+16-1588652181
 231-210301113
-AddPokemonWindow.xaml;EditPokemonWindow.xaml;MainWindow.xaml;PlayerMonstersWindow.xaml;PokemonDetailsWindow.xaml;
+MVVM\View\AddPokemonWindow.xaml;MVVM\View\EditPokemonWindow.xaml;MVVM\View\MainWindow.xaml;MVVM\View\PlayerMonstersWindow.xaml;MVVM\View\PokemonDetailsWindow.xaml;
 
 False
 
