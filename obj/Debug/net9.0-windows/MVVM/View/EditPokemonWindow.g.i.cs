@@ -85,7 +85,7 @@ namespace PokemonLikeCsharp {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/PokemonLikeCsharp;V1.0.0.0;component/mvvm/view/editpokemonwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/PokemonLikeCsharp;component/mvvm/view/editpokemonwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\MVVM\View\EditPokemonWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

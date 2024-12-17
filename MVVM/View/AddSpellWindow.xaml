@@ -1,0 +1,24 @@
+﻿<Window x:Class="PokemonLikeCsharp.AddSpellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ajouter des sorts au monstre"
+        Height="400" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Sélectionnez les sorts à ajouter au monstre :"
+                   FontWeight="Bold" Margin="10" />
+
+        <ListBox Name="SpellsListBox" Grid.Row="1" Margin="10"
+                 DisplayMemberPath="Name"
+                 MouseDoubleClick="SpellsListBox_MouseDoubleClick" />
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Name="CancelButton" Content="Annuler" Click="Close_Click" Margin="5" Width="120" />
+        </StackPanel>
+    </Grid>
+</Window>

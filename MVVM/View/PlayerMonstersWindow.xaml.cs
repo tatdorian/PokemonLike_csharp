@@ -44,7 +44,7 @@ namespace PokemonLikeCsharp
         {
             var addPokemonWindow = new AddPokemonWindow(_username);
             addPokemonWindow.ShowDialog();
-            LoadMonsters(); 
+            LoadMonsters();
         }
 
         private void BackToLogin_Click(object sender, RoutedEventArgs e)
@@ -60,7 +60,7 @@ namespace PokemonLikeCsharp
             {
                 var pokemonDetailsWindow = new PokemonDetailsWindow(selectedMonster);
                 pokemonDetailsWindow.ShowDialog();
-                LoadMonsters(); 
+                LoadMonsters();
             }
         }
     }
