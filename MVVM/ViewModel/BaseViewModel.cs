@@ -9,8 +9,6 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
 {
     abstract public class BaseViewModel : ObservableObject
     {
-        public virtual void OnShowVM() { }
-        public virtual void OnHideVM() { }
        
 
     }

@@ -1,95 +1,111 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using PokemonLikeCsharp.Model;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
+using PokemonLikeCsharp.Model;
 
 namespace PokemonLikeCsharp.MVVM.ViewModel
 {
-    public class LoginViewModel : BaseViewModel
+    public class LoginViewModel : INotifyPropertyChanged
     {
-        public ICommand RequestChangeViewCommand { get; set; }
-        public ICommand RequestSignInCommand { get; set; }
+        
         public ICommand RequestDatabaseViewCommand { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public ICommand LoginCommand { get; }
+        public ICommand SignupCommand { get; }
+        public ICommand ExitCommand { get; }
         public string Database { get; set; }
 
-        private ExercicesMonstersContext _context;
 
+        private ExercicesMonstersContext _context;
         public LoginViewModel()
         {
-            RequestChangeViewCommand = new RelayCommand(HandleRequestChangeViewCommand);
-            RequestSignInCommand = new RelayCommand(HandleRequestSignInCommand);
+            LoginCommand = new RelayCommand(Login);
+            SignupCommand = new RelayCommand(Signup);
+            ExitCommand = new RelayCommand(Exit);
             RequestDatabaseViewCommand = new RelayCommand(HandleRequestDatabaseCommand);
         }
 
-        private string HashPassword(string password)
+        
+        private string _username;
+        public string Username
         {
-            using (var sha256 = SHA256.Create())
+            get => _username;
+            set
             {
-                var hashedPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedPassword);
+                _username = value;
+                OnPropertyChanged(nameof(Username));
             }
         }
 
+        private string _password;
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
 
-        public bool ValidateLogin()
+        // Méthodes pour gérer les actions
+        public void Login()
         {
             if (_context == null)
             {
-                MessageBox.Show("Le contexte de la base de données n'est pas initialisé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                MessageBox.Show("Veuillez d'abord vous connecter à la base de données.");
+                return;
             }
 
-            var user = _context.Logins
-                .FirstOrDefault(u => u.Username == Username && u.PasswordHash == HashPassword(Password));
-
-            return user != null;
-        }
-
-        public void HandleRequestChangeViewCommand()
-        {
-            if (ValidateLogin())
+            var user = _context.Logins.SingleOrDefault(u => u.Username == Username);
+            if (user != null && VerifyPassword(Password, user.PasswordHash))
             {
                 string connectionString = _context.Database.GetConnectionString();
+                if (connectionString == null)
+                {
+                    MessageBox.Show("Chaîne de connexion non valide.");
+                    return;
+                }
+
                 var playerMonstersWindow = new PlayerMonstersWindow(Username, connectionString);
                 playerMonstersWindow.Show();
             }
             else
             {
-                MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect.", "Erreur de connexion", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect");
             }
         }
 
-        public void HandleRequestSignInCommand()
-        {
-            InsertUser(Username, Password);
-        }
 
-        public bool InsertUser(string username, string password)
-        {
-            string hashedPassword = HashPassword(password);
-            var existingUser = _context.Logins.FirstOrDefault(u => u.Username == username);
-            if (existingUser != null)
-            {
-                MessageBox.Show("Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            else
-            {
-                var user = new Login
-                {
-                    Username = username,
-                    PasswordHash = hashedPassword
-                };
 
-                _context.Logins.Add(user);
-                _context.SaveChanges();
-                return true;
+        public void Signup()
+        {
+            if (_context == null)
+            {
+                MessageBox.Show("Veuillez d'abord vous connecter à la base de données.");
+                return;
             }
+
+            if (_context.Logins.Any(u => u.Username == Username))
+            {
+                MessageBox.Show("Nom d'utilisateur déjà pris");
+                return;
+            }
+
+            var newUser = new Login { Username = Username };
+            newUser.PasswordHash = HashPassword(Password);
+            _context.Logins.Add(newUser);
+            _context.SaveChanges();
+
+            var newPlayer = new Player { Name = Username, LoginId = newUser.Id };
+            _context.Players.Add(newPlayer);
+            _context.SaveChanges();
+
+            MessageBox.Show("Compte créé avec succès !");
         }
 
         public void HandleRequestDatabaseCommand()
@@ -123,5 +139,29 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
             }
         }
 
+        public void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashedPassword);
+            }
+        }
+
+        private bool VerifyPassword(string inputPassword, string storedHash)
+        {
+            var hashedInputPassword = HashPassword(inputPassword);
+            return hashedInputPassword == storedHash;
+        }
+
+    
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
