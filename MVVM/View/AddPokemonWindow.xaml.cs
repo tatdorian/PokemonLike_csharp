@@ -13,10 +13,11 @@ namespace PokemonLikeCsharp
         private readonly ExercicesMonstersContext _context;
         private readonly string _username;
 
-        public AddPokemonWindow(string username)
+        // Constructeur qui accepte un paramètre "username"
+        public AddPokemonWindow(string username, string databaseLink)
         {
             InitializeComponent();
-            _context = new ExercicesMonstersContext();
+            _context = new ExercicesMonstersContext(databaseLink);
 
             if (string.IsNullOrEmpty(username))
             {
@@ -27,6 +28,8 @@ namespace PokemonLikeCsharp
 
             _username = username;
         }
+
+
 
         private void AddPokemon_Click(object sender, RoutedEventArgs e)
         {

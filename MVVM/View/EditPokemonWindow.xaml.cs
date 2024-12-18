@@ -9,11 +9,11 @@ namespace PokemonLikeCsharp
         private readonly Monster _monster;
         private readonly ExercicesMonstersContext _context;
 
-        public EditPokemonWindow(Monster monster)
+        public EditPokemonWindow(Monster monster, string databaseLink)
         {
             InitializeComponent();
             _monster = monster;
-            _context = new ExercicesMonstersContext();
+            _context = new ExercicesMonstersContext(databaseLink);  
             LoadMonsterDetails();
         }
 

@@ -1,8 +1,10 @@
-﻿using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using PokemonLikeCsharp.Model;
+using System.Windows.Input;
+using PokemonLikeCsharp.MVVM.View; 
+
+
 
 namespace PokemonLikeCsharp
 {
@@ -10,11 +12,18 @@ namespace PokemonLikeCsharp
     {
         private readonly ExercicesMonstersContext _context;
         private readonly string _username;
+        private readonly string _connectionString;
 
-        public PlayerMonstersWindow(string username)
+        // Modifiez le constructeur pour accepter ces deux arguments
+        public PlayerMonstersWindow(string username, string connectionString)
         {
             InitializeComponent();
-            _context = new ExercicesMonstersContext();
+            _username = username;
+            _connectionString = connectionString;
+            _context = new ExercicesMonstersContext(_connectionString);
+
+            // Utiliser _connectionString pour initialiser le contexte de la base de données
+            _context = new ExercicesMonstersContext(_connectionString);
 
             if (string.IsNullOrEmpty(username))
             {
@@ -23,7 +32,6 @@ namespace PokemonLikeCsharp
                 return;
             }
 
-            _username = username;
             LoadMonsters();
         }
 
@@ -42,10 +50,11 @@ namespace PokemonLikeCsharp
 
         private void AddPokemonBtn_Click(object sender, RoutedEventArgs e)
         {
-            var addPokemonWindow = new AddPokemonWindow(_username);
+            var addPokemonWindow = new AddPokemonWindow(_username, _connectionString);
             addPokemonWindow.ShowDialog();
             LoadMonsters();
         }
+
 
         private void BackToLogin_Click(object sender, RoutedEventArgs e)
         {

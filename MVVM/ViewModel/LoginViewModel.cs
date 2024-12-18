@@ -1,89 +1,31 @@
-﻿using System.ComponentModel;
-using System.Linq;
+﻿using CommunityToolkit.Mvvm.Input;
+using PokemonLikeCsharp.Model;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
-using PokemonLikeCsharp.Model;
+using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
 
-namespace PokemonLikeCsharp.ViewModel
+namespace PokemonLikeCsharp.MVVM.ViewModel
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : BaseViewModel
     {
-        private readonly ExercicesMonstersContext _context;
+        public ICommand RequestChangeViewCommand { get; set; }
+        public ICommand RequestSignInCommand { get; set; }
+        public ICommand RequestDatabaseViewCommand { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Database { get; set; }
+
+        private ExercicesMonstersContext _context;
 
         public LoginViewModel()
         {
-            _context = new ExercicesMonstersContext();
+            RequestChangeViewCommand = new RelayCommand(HandleRequestChangeViewCommand);
+            RequestSignInCommand = new RelayCommand(HandleRequestSignInCommand);
+            RequestDatabaseViewCommand = new RelayCommand(HandleRequestDatabaseCommand);
         }
 
-        // Propriétés
-        private string _username;
-        public string Username
-        {
-            get => _username;
-            set
-            {
-                _username = value;
-                OnPropertyChanged(nameof(Username));
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
-
-        // Méthodes pour gérer les actions
-        public void Login()
-        {
-            var user = _context.Logins.SingleOrDefault(u => u.Username == Username);
-            if (user != null && VerifyPassword(Password, user.PasswordHash))
-            {
-                // Ouvrir la fenêtre PlayerMonstersWindow et transmettre le nom d'utilisateur
-                var playerMonstersWindow = new PlayerMonstersWindow(Username);  // Assurez-vous que Username est passé ici
-                playerMonstersWindow.Show();
-                Application.Current.MainWindow = playerMonstersWindow;
-                Application.Current.Windows.OfType<Window>().FirstOrDefault()?.Close();
-            }
-            else
-            {
-                MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect");
-            }
-        }
-
-
-        public void Signup()
-        {
-            if (_context.Logins.Any(u => u.Username == Username))
-            {
-                MessageBox.Show("Nom d'utilisateur déjà pris");
-                return;
-            }
-
-            var newUser = new Login { Username = Username };
-            newUser.PasswordHash = HashPassword(Password);
-            _context.Logins.Add(newUser);
-            _context.SaveChanges();
-
-            var newPlayer = new Player { Name = Username, LoginId = newUser.Id };
-            _context.Players.Add(newPlayer);
-            _context.SaveChanges();
-
-            MessageBox.Show("Compte créé avec succès !");
-        }
-
-        public void Exit()
-        {
-            Application.Current.Shutdown();
-        }
-
-        // Hachage et vérification du mot de passe
         private string HashPassword(string password)
         {
             using (var sha256 = SHA256.Create())
@@ -93,15 +35,93 @@ namespace PokemonLikeCsharp.ViewModel
             }
         }
 
-        private bool VerifyPassword(string inputPassword, string storedHash)
+
+        public bool ValidateLogin()
         {
-            var hashedInputPassword = HashPassword(inputPassword);
-            return hashedInputPassword == storedHash;
+            if (_context == null)
+            {
+                MessageBox.Show("Le contexte de la base de données n'est pas initialisé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            var user = _context.Logins
+                .FirstOrDefault(u => u.Username == Username && u.PasswordHash == HashPassword(Password));
+
+            return user != null;
         }
 
-        // Implémentation de INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public void HandleRequestChangeViewCommand()
+        {
+            if (ValidateLogin())
+            {
+                string connectionString = _context.Database.GetConnectionString();
+                var playerMonstersWindow = new PlayerMonstersWindow(Username, connectionString);
+                playerMonstersWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect.", "Erreur de connexion", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void HandleRequestSignInCommand()
+        {
+            InsertUser(Username, Password);
+        }
+
+        public bool InsertUser(string username, string password)
+        {
+            string hashedPassword = HashPassword(password);
+            var existingUser = _context.Logins.FirstOrDefault(u => u.Username == username);
+            if (existingUser != null)
+            {
+                MessageBox.Show("Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            else
+            {
+                var user = new Login
+                {
+                    Username = username,
+                    PasswordHash = hashedPassword
+                };
+
+                _context.Logins.Add(user);
+                _context.SaveChanges();
+                return true;
+            }
+        }
+
+        public void HandleRequestDatabaseCommand()
+        {
+            if (!string.IsNullOrEmpty(Database))
+            {
+                try
+                {
+                    App.ConnectionString = Database;
+
+                    _context = new ExercicesMonstersContext(App.ConnectionString);
+
+                    if (_context.Database.CanConnect())
+                    {
+                        MessageBox.Show("Connexion réussie à la base de données.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        throw new Exception("La connexion au serveur a échoué. La chaîne de connexion peut être incorrecte.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur : {ex.Message}\nChaîne de connexion : {Database}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _context = null;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez entrer une chaîne de connexion valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
     }
 }

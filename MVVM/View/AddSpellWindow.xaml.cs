@@ -10,15 +10,15 @@ namespace PokemonLikeCsharp
 {
     public partial class AddSpellWindow : Window
     {
-        public List<Spell> Spells { get; private set; } = new List<Spell>(); // Propriété exposant les sorts sélectionnés
+        public List<Spell> Spells { get; private set; } = new List<Spell>(); 
 
         private readonly Monster _monster;
         private readonly ExercicesMonstersContext _context;
 
-        public AddSpellWindow(Monster monster)
+        public AddSpellWindow(Monster monster, string databaseLink)
         {
             InitializeComponent();
-            _context = new ExercicesMonstersContext();
+            _context = new ExercicesMonstersContext(databaseLink);
             _monster = monster;
 
             LoadAvailableSpells();
