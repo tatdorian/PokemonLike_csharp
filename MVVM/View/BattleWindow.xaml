@@ -57,10 +57,7 @@
             <TextBlock x:Name="lblPlayerName"/>
             <Image x:Name="imgPlayerPokemon" Height="200" Width="200" Margin="0,0,0,10"/>
             <ProgressBar x:Name="pbPlayerHealth" Maximum="100" Value="{Binding Path=_playerMonster.Health}" />
-            <ListBox x:Name="lstPlayerSpells" 
-         DisplayMemberPath="Name" 
-         MouseDoubleClick="lstPlayerSpells_MouseDoubleClick" 
-         Height="200" Width="200" Margin="10"/>
+            <ListBox x:Name="lstPlayerSpells" DisplayMemberPath="Name" MouseDoubleClick="lstPlayerSpells_MouseDoubleClick" Height="200" Width="200" Margin="10"/>
 
         </StackPanel>
 

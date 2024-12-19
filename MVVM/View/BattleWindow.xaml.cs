@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using PokemonLikeCsharp.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokemonLikeCsharp
 {
@@ -21,6 +22,9 @@ namespace PokemonLikeCsharp
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _playerMonster = playerMonster ?? throw new ArgumentNullException(nameof(playerMonster), "Le Pokémon du joueur ne peut pas être nul.");
             _enemyMonster = enemyMonster ?? throw new ArgumentNullException(nameof(enemyMonster), "Le Pokémon ennemi ne peut pas être nul.");
+
+            _context.Entry(_playerMonster).Collection(m => m.Spells).Load();
+            _context.Entry(_enemyMonster).Collection(m => m.Spells).Load();
 
             UpdateUI();
         }
@@ -51,14 +55,9 @@ namespace PokemonLikeCsharp
             pbEnemyHealth.Value = _enemyMonster.Health;
 
             // Mise à jour du texte du tour actuel
-            if (_isPlayerTurn)
-            {
-                TurnIndicator.Text = $"C'est au tour de {_playerMonster.Name}";
-            }
-            else
-            {
-                TurnIndicator.Text = $"C'est au tour de {_enemyMonster.Name}";
-            }
+            TurnIndicator.Text = _isPlayerTurn
+                ? $"C'est au tour de {_playerMonster.Name}"
+                : $"C'est au tour de {_enemyMonster.Name}";
 
             // Debugging pour vérifier les sorts
             Console.WriteLine("Player Spells:");
@@ -67,7 +66,6 @@ namespace PokemonLikeCsharp
                 Console.WriteLine($"ID: {spell.SpellId}, Name: {spell.Name}, Damage: {spell.Damage}");
             }
         }
-
 
         private void lstPlayerSpells_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -88,6 +86,8 @@ namespace PokemonLikeCsharp
                     return;
                 }
 
+                // Player turn over, move to enemy turn
+                _isPlayerTurn = false;
                 EnemyTurn();
             }
         }
@@ -105,6 +105,8 @@ namespace PokemonLikeCsharp
             }
             else
             {
+                // Enemy turn over, move to player turn
+                _isPlayerTurn = true;
                 UpdateUI();
             }
         }
