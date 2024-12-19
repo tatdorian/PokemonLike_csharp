@@ -54,6 +54,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
             <Button Content="Modifier" Click="EditPokemonBtn_Click" Style="{StaticResource ButtonStyle}"/>
             <Button Content="Ajouter des Sorts" Click="AddSpellsBtn_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="btnStartBattle" Content="Lancer un combat" Style="{StaticResource ButtonStyle}" Click="SelectedPokemonBtn_Click" Width="200" Height="38" Margin="10"/>
             <Button Content="Fermer" Click="Close_Click" Style="{StaticResource ButtonStyle}" Background="#F44336"/>
         </StackPanel>
     </Grid>

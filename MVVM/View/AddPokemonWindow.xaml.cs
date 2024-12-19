@@ -13,7 +13,6 @@ namespace PokemonLikeCsharp
         private readonly ExercicesMonstersContext _context;
         private readonly string _username;
 
-        // Constructeur qui accepte un paramètre "username"
         public AddPokemonWindow(string username, string databaseLink)
         {
             InitializeComponent();
@@ -28,9 +27,6 @@ namespace PokemonLikeCsharp
 
             _username = username;
         }
-
-
-
         private void AddPokemon_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(txtPokemonName.Text) || string.IsNullOrEmpty(txtPokemonHealth.Text))
@@ -77,29 +73,25 @@ namespace PokemonLikeCsharp
 
         private void txtImageUrl_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Récupérer l'URL de l'image à partir du TextBox
             string imageUrl = txtImageUrl.Text.Trim();
 
             if (!string.IsNullOrEmpty(imageUrl))
             {
                 try
                 {
-                    // Créer un objet Uri à partir de l'URL de l'image
                     Uri imageUri = new Uri(imageUrl, UriKind.Absolute);
 
-                    // Charger l'image dans le contrôle Image
                     imgPokemon.Source = new BitmapImage(imageUri);
                 }
                 catch (Exception ex)
                 {
-                    // En cas d'erreur (par exemple URL invalide)
+
                     imgPokemon.Source = null;
                     MessageBox.Show($"Erreur lors du chargement de l'image : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                // Si l'URL est vide, cacher l'image
                 imgPokemon.Source = null;
             }
         }

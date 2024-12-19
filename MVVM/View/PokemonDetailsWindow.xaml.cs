@@ -5,24 +5,27 @@ using System.Windows.Media.Imaging;
 using PokemonLikeCsharp.Model;
 using System.Linq;
 using System.Windows.Controls;
+using Microsoft.EntityFrameworkCore.Update.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokemonLikeCsharp
 {
     public partial class PokemonDetailsWindow : Window
     {
         private readonly Monster _monster;
+         private readonly string _username;
 
-        // Constructeur qui accepte un objet Monster
-        public PokemonDetailsWindow(Monster monster)
+
+        public PokemonDetailsWindow(Monster monster, string username)
         {
             InitializeComponent();
-            _monster = monster;  // Assurez-vous de l'assigner à la variable privée
-            LoadMonsterDetails();  // Charge les détails du monstre
+            _monster = monster;
+            _username = username;
+            LoadMonsterDetails();  
         }
-
         private void LoadMonsterDetails()
         {
-            // Remplir l'interface avec les détails du monstre
+           
             txtName.Text = _monster.Name;
             txtHealth.Text = _monster.Health.ToString();
 
@@ -43,8 +46,6 @@ namespace PokemonLikeCsharp
                 imgPokemon.Source = null;
             }
         }
-
-
         private void EditPokemonBtn_Click(object sender, RoutedEventArgs e)
         {
             string databaseLink = App.ConnectionString;
@@ -52,11 +53,31 @@ namespace PokemonLikeCsharp
             editWindow.ShowDialog();
             LoadMonsterDetails();
         }
+        
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private void SelectedPokemonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Assurez-vous de récupérer la chaîne de connexion correctement
+                string connectionString = App.ConnectionString; // Vous pouvez récupérer la chaîne de connexion via App.ConnectionString ou en la passant par ailleurs
+
+                string username = _username; 
+                var selectedPokemonWindow = new SelectedPokemonWindow(_monster, username, connectionString);
+
+                selectedPokemonWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'ouverture du combat : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
         private void AddSpellsBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -71,6 +92,5 @@ namespace PokemonLikeCsharp
                 LoadMonsterDetails();
             }
         }
-
     }
 }

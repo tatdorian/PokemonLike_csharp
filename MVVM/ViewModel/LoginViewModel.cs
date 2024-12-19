@@ -51,8 +51,6 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
                 OnPropertyChanged(nameof(Password));
             }
         }
-
-        // Méthodes pour gérer les actions
         public void Login()
         {
             if (_context == null)
@@ -79,9 +77,6 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
                 MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect");
             }
         }
-
-
-
         public void Signup()
         {
             if (_context == null)
@@ -107,7 +102,6 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
 
             MessageBox.Show("Compte créé avec succès !");
         }
-
         public void HandleRequestDatabaseCommand()
         {
             if (!string.IsNullOrEmpty(Database))
@@ -138,7 +132,6 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
                 MessageBox.Show("Veuillez entrer une chaîne de connexion valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
         public void Exit()
         {
             Application.Current.Shutdown();
@@ -152,7 +145,6 @@ namespace PokemonLikeCsharp.MVVM.ViewModel
                 return Convert.ToBase64String(hashedPassword);
             }
         }
-
         private bool VerifyPassword(string inputPassword, string storedHash)
         {
             var hashedInputPassword = HashPassword(inputPassword);

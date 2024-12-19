@@ -22,9 +22,6 @@ namespace PokemonLikeCsharp.MVVM.View
                 viewModel.Password = ((PasswordBox)sender).Password;
             }
         }
-
-
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel?.Login();

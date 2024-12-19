@@ -22,6 +22,12 @@
     <Compile Update="MVVM\View\AddSpellWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MVVM\View\SelectedPokemonWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MVVM\View\BattleWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MVVM\View\MainWindow.xaml">
@@ -40,6 +46,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MVVM\View\AddSpellWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MVVM\View\SelectedPokemonWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MVVM\View\BattleWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MVVM\View\.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

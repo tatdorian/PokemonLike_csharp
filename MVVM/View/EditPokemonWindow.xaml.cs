@@ -63,7 +63,6 @@ namespace PokemonLikeCsharp
                 _context.Entry(_monster).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
                 _context.SaveChanges();
-
                 this.Close();
             }
             catch (Exception ex)
